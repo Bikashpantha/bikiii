@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pantha Gents Wear</title>
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background: #f4f4f4;
+}
+
+header {
+    background: #111;
+    color: white;
+    padding: 15px;
+    text-align: center;
+}
+
+h1 { margin: 0; }
+
+.container {
+    padding: 20px;
+}
+
+.products {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+.product {
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.product img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    border-radius: 10px;
+    transition: transform 0.3s;
+}
+
+.product img:hover {
+    transform: scale(1.05);
+}
+
+button {
+    background: #111;
+    color: white;
+    border: none;
+    padding: 10px;
+    margin-top: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+button:hover {
+    background: #444;
+}
+
+.cart {
+    background: white;
+    padding: 15px;
+    margin-top: 20px;
+    border-radius: 10px;
+}
+
+.footer {
+    background: #111;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    margin-top: 20px;
+}
+</style>
+
+</head>
+<body>
+
+<header>
+    <h1>Pantha Gents Wear</h1>
+    <p>Stylish Clothes for Men</p>
+</header>
+
+<div class="container">
+
+    <h2>Products</h2>
+
+    <div class="products">
+
+        <div class="product">
+            <img src="https://via.placeholder.com/300x300?text=Shirt">
+            <h3>Casual Shirt</h3>
+            <p>Rs. 1200</p>
+            <button onclick="addToCart('Casual Shirt',1200)">Add to Cart</button>
+        </div>
+
+        <div class="product">
+            <img src="https://via.placeholder.com/300x300?text=Jacket">
+            <h3>Leather Jacket</h3>
+            <p>Rs. 3500</p>
+            <button onclick="addToCart('Leather Jacket',3500)">Add to Cart</button>
+        </div>
+
+        <div class="product">
+            <img src="https://via.placeholder.com/300x300?text=Pants">
+            <h3>Formal Pants</h3>
+            <p>Rs. 1800</p>
+            <button onclick="addToCart('Formal Pants',1800)">Add to Cart</button>
+        </div>
+
+    </div>
+
+    <div class="cart">
+        <h2>🛒 Cart</h2>
+        <ul id="cart-items"></ul>
+        <h3>Total: Rs. <span id="total">0</span></h3>
+
+        <button onclick="clearCart()">Clear Cart</button>
+
+        <h3>Payment</h3>
+        <a href="https://esewa.com.np" target="_blank">
+            <button>Pay with eSewa</button>
+        </a>
+
+        <a href="https://khalti.com" target="_blank">
+            <button>Pay with Khalti</button>
+        </a>
+    </div>
+
+</div>
+
+<div class="container">
+    <h2>Location</h2>
+    <iframe 
+        src="https://maps.google.com/maps?q=Butwal%20Nepal&t=&z=13&ie=UTF8&iwloc=&output=embed"
+        width="100%" height="300" style="border:0;">
+    </iframe>
+</div>
+
+<div class="footer">
+    <h3>Contact Information</h3>
+    <p>Name: Bikash Pantha</p>
+    <p>Phone: +9779800000000</p>
+    <p>Location: Sainamaina, Butwal</p>
+</div>
+
+<script>
+let cart = [];
+let total = 0;
+
+function addToCart(name, price) {
+    cart.push({name, price});
+    total += price;
+    displayCart();
+}
+
+function removeItem(index) {
+    total -= cart[index].price;
+    cart.splice(index, 1);
+    displayCart();
+}
+
+function clearCart() {
+    cart = [];
+    total = 0;
+    displayCart();
+}
+
+function displayCart() {
+    const cartItems = document.getElementById("cart-items");
+    cartItems.innerHTML = "";
+
+    cart.forEach((item, index) => {
+        let li = document.createElement("li");
+        li.innerHTML = `${item.name} - Rs.${item.price} 
+        <button onclick="removeItem(${index})">Remove</button>`;
+        cartItems.appendChild(li);
+    });
+
+    document.getElementById("total").innerText = total;
+}
+</script>
+
+</body>
+</html>
